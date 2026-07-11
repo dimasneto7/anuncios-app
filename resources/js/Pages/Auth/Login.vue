@@ -6,29 +6,29 @@ import TextLink from "../../Components/TextLink.vue";
 import InputField from "../../Components/InputField.vue";
 import PrimaryBtn from "../../Components/PrimaryBtn.vue";
 import ErrorMessages from "../../Components/ErrorMessages.vue";
+import Checkbox from "../../Components/Checkbox.vue";
 
 const form = useForm({
-    name: "",
     email: "",
     password: "",
-    password_confirmation: "",
+    remember: null,
 });
 
 const submit = () => {
-    form.post(route("register"), {
-        onFinish: () => form.reset("password", "password_confirmation"),
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
     });
 };
 </script>
 
 <template>
-    <Head title="- Cadastrar" />
+    <Head title="- Entrar" />
     <Container class="w-1/2">
         <div class="mb-8 text-center">
-            <Title>Crie sua conta</Title>
+            <Title>Entrar</Title>
             <p>
-                Já tem uma conta?
-                <TextLink routeName="login" label="Login" />
+                Ainda não tem uma conta?
+                <TextLink routeName="register" label="Cadastrar" />
             </p>
         </div>
 
@@ -36,7 +36,6 @@ const submit = () => {
         <ErrorMessages :errors="form.errors" />
 
         <form @submit.prevent="submit" class="space-y-6">
-            <InputField label="Name" icon="id-badge" v-model="form.name" />
             <InputField label="Email" icon="at" v-model="form.email" />
             <InputField
                 label="Password"
@@ -44,21 +43,15 @@ const submit = () => {
                 icon="key"
                 v-model="form.password"
             />
-            <InputField
-                label="Confirm Password"
-                type="password"
-                icon="key"
-                v-model="form.password_confirmation"
-            />
 
-            <p class="text-slate-500 text-sm dark:text-slate-400">
-                Fazendo o seu cadastro você concorda com os Termos de Serviço e
-                Políticas de Privacidade.
-            </p>
+            <div class="flex items-center justify-between">
+                <Checkbox name="remember" v-model="form.remember"
+                    >Lemnbrar-me</Checkbox
+                >
+                <TextLink routeName="home" label="Esqueceu a senha?" />
+            </div>
 
-            <PrimaryBtn :disabled="form.processing"
-                >Finalizar Cadastro</PrimaryBtn
-            >
+            <PrimaryBtn :disabled="form.processing">Entrar</PrimaryBtn>
         </form>
     </Container>
 </template>
