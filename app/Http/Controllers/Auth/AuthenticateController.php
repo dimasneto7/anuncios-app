@@ -21,15 +21,14 @@ class AuthenticateController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember')))
-        {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended();
         }
 
         return back()->withErrors([
-            'email' => 'Email ou senha inválido.'
+            'email' => 'The provided credentials do not match our records.'
         ])->onlyInput('email');
     }
 
