@@ -1,17 +1,22 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
 import Container from "../../Components/Container.vue";
 import Title from "../../Components/Title.vue";
 import TextLink from "../../Components/TextLink.vue";
 import InputField from "../../Components/InputField.vue";
 import PrimaryBtn from "../../Components/PrimaryBtn.vue";
 import ErrorMessages from "../../Components/ErrorMessages.vue";
-import Checkbox from "../../Components/Checkbox.vue";
+import SessionMessages from "../../Components/SessionMessages.vue";
+import CheckBox from "../../Components/CheckBox.vue";
+import { useForm } from "@inertiajs/vue3";
 
 const form = useForm({
     email: "",
     password: "",
     remember: null,
+});
+
+defineProps({
+    status: String,
 });
 
 const submit = () => {
@@ -22,21 +27,23 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="- Entrar" />
+    <Head title="- Login" />
     <Container class="w-1/2">
         <div class="mb-8 text-center">
-            <Title>Entrar</Title>
+            <Title>Login to your account</Title>
             <p>
-                Ainda não tem uma conta?
-                <TextLink routeName="register" label="Cadastrar" />
+                Need an account?
+                <TextLink routeName="register" label="Register" />
             </p>
         </div>
 
-        <!-- Error Messages -->
+        <!-- Errors messages -->
         <ErrorMessages :errors="form.errors" />
+        <SessionMessages :status="status" />
 
         <form @submit.prevent="submit" class="space-y-6">
             <InputField label="Email" icon="at" v-model="form.email" />
+
             <InputField
                 label="Password"
                 type="password"
@@ -45,13 +52,17 @@ const submit = () => {
             />
 
             <div class="flex items-center justify-between">
-                <Checkbox name="remember" v-model="form.remember"
-                    >Lemnbrar-me</Checkbox
-                >
-                <TextLink routeName="home" label="Esqueceu a senha?" />
+                <CheckBox name="remember" v-model="form.remember">
+                    Remember me
+                </CheckBox>
+
+                <TextLink
+                    routeName="password.request"
+                    label="Forgot Password?"
+                />
             </div>
 
-            <PrimaryBtn :disabled="form.processing">Entrar</PrimaryBtn>
+            <PrimaryBtn :disabled="form.processing">Login</PrimaryBtn>
         </form>
     </Container>
 </template>
