@@ -57,10 +57,10 @@ const show = ref(false);
                 <!-- Guest -->
                 <div v-else class="space-x-6">
                     <NavLink routeName="login" componentName="Auth/Login"
-                        >Entrar</NavLink
+                        >Login</NavLink
                     >
                     <NavLink routeName="register" componentName="Auth/Register"
-                        >Cadastrar</NavLink
+                        >Register</NavLink
                     >
                 </div>
                 <button
