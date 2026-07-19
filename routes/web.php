@@ -14,6 +14,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::patch('/profile', [ProfileController::class, 'updateInfo'])
         ->name('profile.info');
+
+    Route::put('/profile', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password');
 });
 
 Route::inertia('/', 'Home')->name('home');
