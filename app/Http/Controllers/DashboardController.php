@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $listing =
             $request->user()->role !== 'suspended' ?
-            $request->user()->listings()->latest()->paginate(1) :
+            $request->user()->listings()->latest()->paginate(10) :
             null;
 
         return Inertia::render('Dashboard', [
