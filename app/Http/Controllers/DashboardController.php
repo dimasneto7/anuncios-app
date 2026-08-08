@@ -7,8 +7,16 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Dashboard');
+        $listing =
+            $request->user()->role !== 'suspended' ?
+            $request->user()->listings()->latest()->paginate(1) :
+            null;
+
+        return Inertia::render('Dashboard', [
+            'listings' => $listing,
+            'status' => session('status')
+        ]);
     }
 }
